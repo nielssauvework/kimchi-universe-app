@@ -2,14 +2,92 @@
 const state = {
   selectedIngredients: new Set(),
   currentStep: 0,
-  currentTab: 'ingredients'
+  currentTab: 'ingredients',
+  cabbageHeads: 1,
+  ingredientAmounts: {} // { ingredientId: currentQty }
 };
 
 // Category keys in order
 const CATEGORIES = ['brining', 'seasoning', 'additional', 'feast'];
 
+// Initialize default amounts based on cabbage heads
+function initAmounts() {
+  for (const cat of CATEGORIES) {
+    for (const item of INGREDIENTS[cat].items) {
+      if (!item.isCabbage) {
+        state.ingredientAmounts[item.id] = roundQty(item.baseQty * state.cabbageHeads);
+      }
+    }
+  }
+}
+
+// Round quantity for clean display
+function roundQty(qty) {
+  if (qty >= 100) return Math.round(qty);
+  if (qty >= 10) return Math.round(qty * 10) / 10;
+  if (qty >= 1) return Math.round(qty * 10) / 10;
+  return Math.round(qty * 100) / 100;
+}
+
+// Get step size for +/- based on unit and base quantity
+function getStepSize(item) {
+  const unit = item.unit;
+  if (unit === 'g' || unit === 'ml') {
+    if (item.baseQty >= 100) return 50;
+    if (item.baseQty >= 20) return 10;
+    return 5;
+  }
+  if (unit === 'L') return 0.5;
+  if (unit === 'tbsp') return 1;
+  if (unit === 'tsp') return 0.5;
+  if (unit === 'cup') return 0.5;
+  if (unit === 'stalks' || unit === 'pieces') return 1;
+  if (unit === 'stalk' || unit === 'head') return 1;
+  return 1;
+}
+
+// Format amount for display
+function formatAmount(id) {
+  const item = findItem(id);
+  if (!item) return '';
+  if (item.isCabbage) return `${state.cabbageHeads} ${state.cabbageHeads === 1 ? 'head' : 'heads'}`;
+  const qty = state.ingredientAmounts[id];
+  if (qty === undefined) return '';
+  // Clean up display
+  const displayQty = Number.isInteger(qty) ? qty : qty.toFixed(1).replace(/\.0$/, '');
+  return `${displayQty} ${item.unit}`;
+}
+
+// Find an ingredient item by id
+function findItem(id) {
+  for (const cat of CATEGORIES) {
+    const found = INGREDIENTS[cat].items.find(i => i.id === id);
+    if (found) return found;
+  }
+  return null;
+}
+
+// Update cabbage heads and recalculate all amounts
+function setCabbageHeads(count) {
+  state.cabbageHeads = Math.max(1, Math.min(20, count));
+  initAmounts();
+  updateUI();
+}
+
+// Adjust individual ingredient amount
+function adjustAmount(id, delta, event) {
+  if (event) event.stopPropagation();
+  const item = findItem(id);
+  if (!item || item.isCabbage) return;
+  const step = getStepSize(item);
+  const newQty = Math.max(step, roundQty(state.ingredientAmounts[id] + delta * step));
+  state.ingredientAmounts[id] = newQty;
+  updateUI();
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  initAmounts();
   renderStepIndicators();
   renderIngredientSteps();
   preselectEssentials();
@@ -74,6 +152,26 @@ function renderIngredientSteps() {
   const container = document.getElementById('ingredient-steps');
   container.innerHTML = '';
 
+  // Cabbage head selector (always visible at top)
+  const selector = document.createElement('div');
+  selector.className = 'cabbage-selector';
+  selector.id = 'cabbage-selector';
+  selector.innerHTML = `
+    <div class="cabbage-selector-left">
+      <span class="cabbage-emoji">🥬</span>
+      <div>
+        <div class="cabbage-selector-title">Cabbage Heads</div>
+        <div class="cabbage-selector-hint">Adjusts all ingredient amounts</div>
+      </div>
+    </div>
+    <div class="cabbage-selector-controls">
+      <button class="qty-btn" onclick="setCabbageHeads(state.cabbageHeads - 1)">−</button>
+      <span class="cabbage-count">${state.cabbageHeads}</span>
+      <button class="qty-btn" onclick="setCabbageHeads(state.cabbageHeads + 1)">+</button>
+    </div>
+  `;
+  container.appendChild(selector);
+
   CATEGORIES.forEach((cat, i) => {
     const data = INGREDIENTS[cat];
     const section = document.createElement('div');
@@ -95,7 +193,15 @@ function renderIngredientSteps() {
                data-id="${item.id}" onclick="toggleIngredient('${item.id}')">
             <div class="ingredient-emoji">${item.emoji}</div>
             <div class="ingredient-name">${item.name}</div>
-            <div class="ingredient-amount">${item.amount}</div>
+            <div class="ingredient-amount-row">
+              ${item.isCabbage ? `
+                <span class="ingredient-amount">${formatAmount(item.id)}</span>
+              ` : `
+                <button class="qty-btn-sm" onclick="adjustAmount('${item.id}', -1, event)">−</button>
+                <span class="ingredient-amount">${formatAmount(item.id)}</span>
+                <button class="qty-btn-sm" onclick="adjustAmount('${item.id}', 1, event)">+</button>
+              `}
+            </div>
             ${item.bulk ? `<div class="ingredient-bulk">Bulk: ${item.bulk}</div>` : ''}
             ${item.essential ? '<div class="ingredient-essential">Essential</div>' : ''}
           </div>
@@ -305,7 +411,7 @@ function renderRecipe() {
   container.innerHTML = `
     <div class="section-header">
       <div class="section-title">Your Kimchi Recipe</div>
-      <div class="section-subtitle" style="color: var(--accent)">${state.selectedIngredients.size} ingredients selected</div>
+      <div class="section-subtitle" style="color: var(--accent)">${state.selectedIngredients.size} ingredients selected · ${state.cabbageHeads} cabbage ${state.cabbageHeads === 1 ? 'head' : 'heads'}</div>
     </div>
 
     <div class="recipe-ingredient-summary">
@@ -316,7 +422,7 @@ function renderRecipe() {
           <div class="recipe-ingredient-row">
             <span>${item.emoji}</span>
             <span>${item.name}</span>
-            <span class="amount">${item.amount}</span>
+            <span class="amount">${formatAmount(item.id)}</span>
           </div>
         `).join('')}
       `).join('')}
@@ -334,7 +440,7 @@ function renderRecipe() {
         <div class="recipe-step-instructions">${step.instructions}</div>
         ${step.ingredients.length > 0 ? `
           <div class="recipe-step-chips">
-            ${step.ingredients.map(i => `<span class="recipe-chip">${i.emoji} ${i.name}</span>`).join('')}
+            ${step.ingredients.map(i => `<span class="recipe-chip">${i.emoji} ${i.name} · ${formatAmount(i.id)}</span>`).join('')}
           </div>
         ` : ''}
       </div>
@@ -417,6 +523,9 @@ function updateUI() {
 
   // Update step indicators
   renderStepIndicators();
+
+  // Re-render ingredient steps (to update amounts)
+  renderIngredientSteps();
 
   // Update ingredient cards
   document.querySelectorAll('.step-section').forEach((section, i) => {
