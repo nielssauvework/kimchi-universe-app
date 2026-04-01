@@ -794,6 +794,108 @@ html, body {
   margin-top: 7px;
 }
 
+/* Cabbage Head Selector */
+.cabbage-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(255,149,0,0.12), rgba(255,69,58,0.06));
+  border: 1px solid rgba(255,149,0,0.25);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.cabbage-selector-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cabbage-emoji {
+  font-size: 28px;
+}
+
+.cabbage-selector-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cabbage-selector-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.cabbage-selector-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cabbage-count {
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: center;
+  color: var(--accent);
+}
+
+.qty-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,149,0,0.4);
+  background: rgba(255,149,0,0.1);
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.qty-btn:active {
+  background: rgba(255,149,0,0.3);
+  transform: scale(0.92);
+}
+
+/* Per-ingredient +/- buttons */
+.ingredient-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-btn-sm {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+}
+
+.qty-btn-sm:active {
+  background: rgba(255,149,0,0.2);
+  border-color: rgba(255,149,0,0.4);
+  color: var(--accent);
+  transform: scale(0.9);
+}
+
 /* Responsive: make it fullscreen on small viewports */
 @media (max-width: 420px) {
   html, body { background: #000; }
