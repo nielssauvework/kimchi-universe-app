@@ -19,7 +19,6 @@ const INGREDIENTS = {
     items: [
       { id: "red-pepper", name: "Red Pepper Powder", amount: "~½ cup (50-70g)", bulk: "1000g", emoji: "🌶️", essential: true, tags: ["antimicrobial"] },
       { id: "minced-garlic", name: "Minced Garlic", amount: "~2 tbsp (30g)", bulk: "600g", emoji: "🧄", essential: true, tags: ["antimicrobial"] },
-      { id: "ginger-slices", name: "Ginger Slices", amount: "~2-3 slices", bulk: null, emoji: "🫚", essential: false, tags: ["antimicrobial"] },
       { id: "fish-sauce", name: "Anchovy Fish Sauce", amount: "~2 tbsp (30ml)", bulk: "650ml", emoji: "🐟", essential: true, tags: ["fishBased"] },
       { id: "minced-ginger", name: "Minced Ginger", amount: "~1 tsp (5g)", bulk: "1 EA", emoji: "🫚", essential: false, tags: ["antimicrobial"] },
       { id: "green-onion-s", name: "Green Onion", amount: "1 stalk", bulk: "3 EA", emoji: "🧅", essential: false, tags: ["vegetableBase"] },
@@ -31,14 +30,20 @@ const INGREDIENTS = {
     icon: "🌿",
     description: "Add depth and complexity",
     items: [
-      { id: "radish", name: "Radish", amount: "~¼ (150g)", bulk: "4 EA", emoji: "🥕", essential: false, tags: ["sugarSource", "vegetableBase"] },
+      { id: "radish", name: "Radish", amount: "~¼ (150g)", bulk: "4 EA", emoji: "🫚", essential: false, tags: ["sugarSource", "vegetableBase"] },
       { id: "pear", name: "Pear", amount: "~¼ (50g)", bulk: "8 EA", emoji: "🍐", essential: false, tags: ["sugarSource"] },
-      { id: "green-onion-stalks", name: "Green Onion Stalks", amount: "~5-6 stalks", bulk: "7 stalks", emoji: "🧅", essential: false, tags: ["vegetableBase"] },
+      { id: "green-onion-stalks", name: "Green Onion Stalks", amount: "~5-6 stalks", bulk: "7 stalks", emoji: "🥬", essential: false, tags: ["vegetableBase"] },
       { id: "cooking-wine", name: "Cooking Wine / Soju", amount: "2 tbsp", bulk: "1 bottle", emoji: "🍶", essential: false, tags: ["alcoholSource"] },
-      { id: "pork", name: "Pork", amount: "200g", bulk: "700g", emoji: "🥩", essential: false, tags: ["proteinSource"] },
-      { id: "salt-extra", name: "Salt", amount: "½ spoon", bulk: null, emoji: "🧂", essential: false, tags: ["saltSource"] },
       { id: "onion", name: "Onion", amount: "~¼ (50g)", bulk: "5 EA", emoji: "🧅", essential: false, tags: ["sugarSource", "vegetableBase"] },
-      { id: "garlic-cloves", name: "Garlic Cloves", amount: "3-4 cloves", bulk: null, emoji: "🧄", essential: false, tags: ["antimicrobial"] },
+      { id: "seaweed", name: "Dried Seaweed (Dashima)", amount: "1 sheet (5g)", bulk: "1 pack", emoji: "🌿", essential: false, tags: ["vegetableBase"] },
+      { id: "cashew-nut", name: "Cashew Nuts", amount: "~2 tbsp (20g)", bulk: "1 bag", emoji: "🥜", essential: false, tags: ["sugarSource"] },
+      { id: "sesame-seeds", name: "Sesame Seeds", amount: "1 tbsp", bulk: "1 bag", emoji: "🫘", essential: false, tags: ["sugarSource"] },
+      { id: "carrot", name: "Carrot", amount: "~½ (50g)", bulk: "3 EA", emoji: "🥕", essential: false, tags: ["sugarSource", "vegetableBase"] },
+      { id: "chives", name: "Chives (Buchu)", amount: "~50g", bulk: "2 bunches", emoji: "🌱", essential: false, tags: ["vegetableBase"] },
+      { id: "salted-shrimp", name: "Salted Shrimp (Saeujeot)", amount: "1 tbsp", bulk: "1 jar", emoji: "🦐", essential: false, tags: ["fishBased", "proteinSource"] },
+      { id: "oyster", name: "Fresh Oysters", amount: "~5-6 pieces", bulk: null, emoji: "🦪", essential: false, tags: ["fishBased", "proteinSource"] },
+      { id: "chestnuts", name: "Chestnuts", amount: "3-4 pieces", bulk: "1 bag", emoji: "🌰", essential: false, tags: ["sugarSource"] },
+      { id: "pine-nuts", name: "Pine Nuts", amount: "1 tbsp", bulk: "1 bag", emoji: "🌲", essential: false, tags: ["sugarSource"] },
     ]
   },
   feast: {
