@@ -228,7 +228,7 @@ function generateRecipe() {
   if (seasoning.length > 0) {
     let instr = 'In a large mixing bowl, combine the red pepper powder';
     if (selected.has('minced-garlic')) instr += ', minced garlic';
-    if (selected.has('minced-ginger') || selected.has('ginger-slices')) instr += ', ginger';
+    if (selected.has('minced-ginger')) instr += ', ginger';
     if (selected.has('fish-sauce')) instr += ', anchovy fish sauce';
     if (hasRicePaste) instr += ', and glutinous rice paste for extra body and sweetness';
     instr += '. Mix into a smooth, thick paste. The paste should be vibrant red and aromatic.';
@@ -250,8 +250,15 @@ function generateRecipe() {
     if (selected.has('pear')) parts.push('grate the pear finely (adds natural sweetness and aids fermentation)');
     if (selected.has('green-onion-stalks')) parts.push('cut green onions into 1-inch pieces');
     if (selected.has('onion')) parts.push('thinly slice the onion');
-    if (selected.has('pork')) parts.push('slice the pork into thin strips (for added protein and umami)');
-    if (selected.has('garlic-cloves')) parts.push('mince the garlic cloves');
+    if (selected.has('seaweed')) parts.push('soak dried seaweed briefly and cut into small pieces');
+    if (selected.has('cashew-nut')) parts.push('roughly chop the cashew nuts');
+    if (selected.has('sesame-seeds')) parts.push('lightly toast the sesame seeds');
+    if (selected.has('carrot')) parts.push('julienne the carrot into thin matchsticks');
+    if (selected.has('chives')) parts.push('cut chives into 1-inch pieces');
+    if (selected.has('salted-shrimp')) parts.push('add salted shrimp for deep umami flavor');
+    if (selected.has('oyster')) parts.push('rinse and add fresh oysters (adds rich umami and brininess)');
+    if (selected.has('chestnuts')) parts.push('slice chestnuts thinly');
+    if (selected.has('pine-nuts')) parts.push('add pine nuts for a subtle nutty richness');
 
     let instr = 'Prepare the additional ingredients: ' + parts.join('; ') + '. ';
     instr += 'Toss all prepared vegetables and additions with the seasoning paste until evenly coated.';
