@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Kimchi Lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="phone-frame">
+    <div id="app">
+      <!-- Top Bar -->
+      <header id="top-bar">
+        <div class="top-bar-left">
+          <h1 class="app-title">Kimchi Lab</h1>
+          <span id="tab-subtitle" class="subtitle">Ingredients</span>
+        </div>
+        <div id="ingredient-count" class="badge" style="display:none">0</div>
+      </header>
+
+      <!-- Screen Container -->
+      <main id="screen-container">
+        <!-- Ingredients Screen -->
+        <section id="screen-ingredients" class="screen active">
+          <div class="step-indicators" id="step-indicators"></div>
+          <div id="ingredient-steps" class="steps-container"></div>
+        </section>
+
+        <!-- Microbiome Screen -->
+        <section id="screen-microbiome" class="screen">
+          <div class="screen-scroll" id="microbiome-content"></div>
+        </section>
+
+        <!-- Recipe Screen -->
+        <section id="screen-recipe" class="screen">
+          <div class="screen-scroll" id="recipe-content"></div>
+        </section>
+      </main>
+
+      <!-- Benefits Modal -->
+      <div id="benefits-overlay" class="benefits-overlay" onclick="closeBenefits(event)">
+        <div class="benefits-sheet" onclick="event.stopPropagation()">
+          <div class="benefits-handle"></div>
+          <div class="benefits-header" id="benefits-header"></div>
+          <div class="benefits-body" id="benefits-body"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <nav id="bottom-bar">
+        <button class="tab-btn active" data-tab="ingredients">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Ingredients</span>
+        </button>
+        <button class="tab-btn" data-tab="microbiome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-7.07-15.07l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+          <span>Microbiome</span>
+        </button>
+        <button class="tab-btn" data-tab="recipe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          <span>Recipe</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
